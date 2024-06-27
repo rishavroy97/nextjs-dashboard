@@ -15,11 +15,11 @@ export async function fetchRevenue() {
     // Don't do this in production :)
 
     console.log('Fetching revenue data...');
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    console.log('Data fetch completed after 5 seconds.');
+    console.log('Data fetch completed after 1 second(s).');
 
     return data.rows;
   } catch (error) {
@@ -31,7 +31,7 @@ export async function fetchRevenue() {
 export async function fetchLatestInvoices() {
   try {
     console.log('Fetching Latest Invoice data...');
-    await new Promise((resolve) => setTimeout(resolve, 7000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
@@ -40,7 +40,7 @@ export async function fetchLatestInvoices() {
       ORDER BY invoices.date DESC
       LIMIT 5`;
 
-    console.log('Data fetch completed after 7 seconds.');
+    console.log('Data fetch completed after 1 second(s).');
 
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
@@ -57,7 +57,7 @@ export async function fetchCardData() {
   try {
 
     console.log('Fetching Cards data...');
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
@@ -75,7 +75,7 @@ export async function fetchCardData() {
       invoiceStatusPromise,
     ]);
 
-    console.log('Data fetch completed after 10 seconds.');
+    console.log('Data fetch completed after 1 second(s).');
 
     const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
@@ -104,7 +104,7 @@ export async function fetchFilteredInvoices(
   try {
 
     console.log('Fetching Invoice Search data...');
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const invoices = await sql<InvoicesTable>`
       SELECT
@@ -127,7 +127,7 @@ export async function fetchFilteredInvoices(
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
 
-    console.log('Data fetch completed after 2 seconds.');
+    console.log('Data fetch completed after 1 second(s).');
 
     return invoices.rows;
   } catch (error) {
